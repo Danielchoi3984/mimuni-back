@@ -45,8 +45,8 @@ public class MimuniBackApplication implements CommandLineRunner {
 
 //		Aca Hagamos las pruebas amigossdsss
 		
-		List<Sitio> sitios = sitioService.sitios();
-		mostrarSitios(sitios);
+//		List<Sitio> sitios = sitioService.sitios();
+//		mostrarSitios(sitios);
 
 	}
 

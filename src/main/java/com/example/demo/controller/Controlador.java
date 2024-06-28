@@ -175,7 +175,6 @@ public class Controlador {
 		} else {
 			return ResponseEntity.status(404).body(resultado);
 		}
-
 	}
 
 	@GetMapping("/sitios")

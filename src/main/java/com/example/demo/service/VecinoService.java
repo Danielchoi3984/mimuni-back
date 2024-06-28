@@ -121,9 +121,12 @@ public class VecinoService {
 
 //	NUEVOOO
 	public String cambiarContraseniaVecino(String mail, String actual, String nueva1, String nueva2) {
-		Optional<Vecinoregistrado> vecinoOptional = repoVecinoRegistrado.findById(mail);
-		if (vecinoOptional.isPresent()) {
-			Vecinoregistrado vecino = vecinoOptional.get();
+		List<Vecinoregistrado> vecinos = repoVecinoRegistrado.findByMail(mail);
+		Vecinoregistrado vecino = null;
+		for (Vecinoregistrado v : vecinos) {
+			vecino = v;
+		}
+		if (vecino != null) {
 			if (actual.equals(vecino.getContrasenia())) {
 				if (nueva1.equals(nueva2)) {
 					vecino.setContrasenia(nueva2);
@@ -139,4 +142,5 @@ public class VecinoService {
 			return "MAIL DE VECINO NO ENCONTRADO";
 		}
 	}
+
 }
