@@ -33,8 +33,14 @@ public class PersonalService {
 			System.out.println("NO ESTAS REGISTRADO COMO INSPECTOR");
 			return false;
 		} else if (optionalPersonal.get().getPassword().equals(password)) {
-			System.out.println("LOGIN INSPECTOR EXITOSO");
-			return true;
+			Personal personalMunicipal = optionalPersonal.get();
+			if (personalMunicipal.getCategoria() == 8) {
+				System.out.println("LOGIN INSPECTOR EXITOSO");
+				return true;
+			} else {
+				System.out.println("SOS EMPLEADO MUNICIPAL PERO NO INSPECTOR");
+				return false;
+			}
 		} else {
 			System.out.println("LOGIN INSPECTOR FALLIDO: CONTRASENIA INCORRECTA");
 			return false;
