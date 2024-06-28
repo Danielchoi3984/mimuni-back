@@ -24,10 +24,11 @@ public class BarrioService {
 	public Barrio barrioId(Integer idBarrio) {
 		Optional<Barrio> barrioOptional = repositorio.findById(idBarrio);
 		if (barrioOptional.isPresent()) {
+//			Si encontro el barrio lo devolvemos
 			Barrio barrio = barrioOptional.get();
 			return barrio;
 		} else {
-			System.out.println("ESE ID BARRIO NO EXISTE");
+//			Si no encontro el barrio devolvemos null
 			return null;
 		}
 	}

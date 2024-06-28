@@ -19,6 +19,7 @@ public class PersonalService {
 	public Personal perfilInspector(Integer legajo) {
 		Optional<Personal> inspectorOptional = repositorio.findById(legajo);
 		if (inspectorOptional.isPresent()) {
+//			Encontramos al inspector
 			Personal inspector = inspectorOptional.get();
 			return inspector;
 		} else {
@@ -29,13 +30,13 @@ public class PersonalService {
 	public boolean loginInspector(Integer legajo, String password) {
 		Optional<Personal> optionalPersonal = repositorio.findById(legajo);
 		if (optionalPersonal.isEmpty()) {
-			System.out.println("No sos inspector");
+			System.out.println("NO ESTAS REGISTRADO COMO INSPECTOR");
 			return false;
 		} else if (optionalPersonal.get().getPassword().equals(password)) {
-			System.out.println("Login exitoso");
+			System.out.println("LOGIN INSPECTOR EXITOSO");
 			return true;
 		} else {
-			System.out.println("Contraseña incorrecta");
+			System.out.println("LOGIN INSPECTOR FALLIDO: CONTRASENIA INCORRECTA");
 			return false;
 		}
 	}
