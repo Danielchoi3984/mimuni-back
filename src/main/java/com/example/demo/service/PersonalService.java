@@ -15,7 +15,7 @@ public class PersonalService {
 	@Autowired
 	PersonalRepository repositorio;
 
-	// NUEVOOOOOOOOO: Despues entrega
+	// NUEVOOOOOOOOO: Despues entrega (DEVUELVE AL INSPECTOR)
 	public Personal perfilInspector(Integer legajo) {
 		Optional<Personal> inspectorOptional = repositorio.findById(legajo);
 		if (inspectorOptional.isPresent()) {

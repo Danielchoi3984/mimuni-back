@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,12 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.modelo.Barrio;
+import com.example.demo.modelo.Desperfecto;
 import com.example.demo.modelo.Personal;
 import com.example.demo.modelo.ServicioComercio;
 import com.example.demo.modelo.ServicioProfesional;
 import com.example.demo.modelo.Sitio;
 import com.example.demo.modelo.Vecino;
 import com.example.demo.service.BarrioService;
+import com.example.demo.service.DesperfectoService;
 import com.example.demo.service.PersonalService;
 import com.example.demo.service.ServicioComercioService;
 import com.example.demo.service.ServicioProfesionalService;
@@ -45,6 +48,9 @@ public class Controlador {
 
 	@Autowired
 	SitioService sitioService;
+
+	@Autowired
+	DesperfectoService desperfectoService;
 
 	@PostMapping("/loginInspector")
 	public ResponseEntity<String> loginInspector(@RequestParam Integer legajo, @RequestParam String password) {
@@ -182,6 +188,26 @@ public class Controlador {
 		return sitioService.sitios();
 	}
 
-//	@PutMapping("/cambiarContraseniaVecino")
+	@GetMapping("/todosLosDesperfectos")
+	public List<Desperfecto> todosLosDesperfectos() {
+		return desperfectoService.todosLosDesperfectos();
+	}
 
+	@GetMapping("/desperfectosPorSector")
+	public List<Desperfecto> desperfectosPorSector(@RequestParam Integer legajo) {
+		Personal inspector = personalservice.perfilInspector(legajo);
+		if (inspector != null) {
+			if (inspector.getCategoria() == 8) {
+				String sectorInspector = inspector.getSector();
+				return desperfectoService.desperfectoPorSector(sectorInspector);
+			} else {
+				System.out.println("SOS PERSONAL MUNICIPAL PERO NO INSPECTOR");
+				return null;
+			}
+		} else {
+			System.out.println("NO SOS PERSONAL MUNICIPAL");
+			return null;
+		}
+
+	}
 }
