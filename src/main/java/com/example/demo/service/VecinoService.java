@@ -14,6 +14,7 @@ import com.example.demo.repository.VecinoregistradoRepository;
 
 @Service
 public class VecinoService {
+
 	@Autowired
 	VecinoRepository repoVecino;
 	@Autowired
@@ -115,6 +116,27 @@ public class VecinoService {
 				System.out.println("LOGIN VECINO: CONTRASENIA INCORRECTA");
 				return "Datos incorrectos";
 			}
+		}
+	}
+
+//	NUEVOOO
+	public String cambiarContraseniaVecino(String mail, String actual, String nueva1, String nueva2) {
+		Optional<Vecinoregistrado> vecinoOptional = repoVecinoRegistrado.findById(mail);
+		if (vecinoOptional.isPresent()) {
+			Vecinoregistrado vecino = vecinoOptional.get();
+			if (actual.equals(vecino.getContrasenia())) {
+				if (nueva1.equals(nueva2)) {
+					vecino.setContrasenia(nueva2);
+					repoVecinoRegistrado.save(vecino);
+					return "CAMBIO DE CONTRASENIA EXITOSO";
+				} else {
+					return "LAS CONTRASENIAS SON INCORRECTAS";
+				}
+			} else {
+				return "CONTRASENIA INCORRECTA";
+			}
+		} else {
+			return "MAIL DE VECINO NO ENCONTRADO";
 		}
 	}
 }

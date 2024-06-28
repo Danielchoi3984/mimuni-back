@@ -164,9 +164,25 @@ public class Controlador {
 		}
 	}
 
+//	ESTO ES NUEVO
+	@PutMapping("/cambiarContraseniaVecino")
+	public ResponseEntity<String> cambiarContraseniaVecino(@RequestParam String mail, @RequestParam String actual,
+			@RequestParam String nueva1, @RequestParam String nueva2) {
+
+		String resultado = vecinoservice.cambiarContraseniaVecino(mail, actual, nueva1, nueva2);
+		if (resultado.equals("CAMBIO DE CONTRASENIA EXITOSO")) {
+			return ResponseEntity.ok(resultado);
+		} else {
+			return ResponseEntity.status(404).body(resultado);
+		}
+
+	}
+
 	@GetMapping("/sitios")
-	public List<Sitio> sitios(){
+	public List<Sitio> sitios() {
 		return sitioService.sitios();
 	}
+
+//	@PutMapping("/cambiarContraseniaVecino")
 
 }
