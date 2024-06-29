@@ -262,10 +262,14 @@ public class Controlador {
 		List<String> urls = new ArrayList<>();
 
 		for (ImagenReclamo imagen : imagenesReclamo) {
-			String url = "http://192.168.1.12:8080/imagenes/" + Paths.get(imagen.getPath()).getFileName().toString();
+			String url = "http://localhost:8080/imagenes/" + Paths.get(imagen.getPath()).getFileName().toString();
 			urls.add(url);
 		}
 		return ResponseEntity.ok(urls);
 	}
 
+	@GetMapping("/misReclamosVecino")
+	public List<Reclamo> misReclamosVecino(@RequestParam String mail) {
+		return reclamoService.misReclamosVecino(mail);
+	}
 }

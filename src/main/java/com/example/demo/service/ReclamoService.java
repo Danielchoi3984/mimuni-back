@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,6 +83,18 @@ public class ReclamoService {
 			reclamo = r;
 		}
 		return reclamo;
+	}
+
+	public List<Reclamo> misReclamosVecino(String mail) {
+		Vecino vecino = vecinoservice.perfilVecinoregistrado(mail);
+		List<Reclamo> reclamos = reclamoRepository.findAll();
+		List<Reclamo> misReclamos = new ArrayList<>();
+		for (Reclamo reclamo : reclamos) {
+			if (reclamo.getDocumento().equals(vecino.getDocumento())) {
+				misReclamos.add(reclamo);
+			}
+		}
+		return misReclamos;
 	}
 
 }
