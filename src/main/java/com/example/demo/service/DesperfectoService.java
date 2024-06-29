@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,4 +34,13 @@ public class DesperfectoService {
 		return desperfectoSector;
 	}
 
+	public Desperfecto buscarDesperfectoId(Integer idDesperfecto) {
+		Optional<Desperfecto> desperfectoOptional = desperfectoRepository.findById(idDesperfecto);
+		if (desperfectoOptional.isPresent()) {
+			Desperfecto desperfecto = desperfectoOptional.get();
+			return desperfecto;
+		} else {
+			return null;
+		}
+	}
 }

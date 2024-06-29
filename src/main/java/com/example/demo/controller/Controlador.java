@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.modelo.Barrio;
 import com.example.demo.modelo.Desperfecto;
@@ -19,9 +20,11 @@ import com.example.demo.modelo.ServicioComercio;
 import com.example.demo.modelo.ServicioProfesional;
 import com.example.demo.modelo.Sitio;
 import com.example.demo.modelo.Vecino;
+import com.example.demo.modelo.Vecinoregistrado;
 import com.example.demo.service.BarrioService;
 import com.example.demo.service.DesperfectoService;
 import com.example.demo.service.PersonalService;
+import com.example.demo.service.ReclamoService;
 import com.example.demo.service.ServicioComercioService;
 import com.example.demo.service.ServicioProfesionalService;
 import com.example.demo.service.SitioService;
@@ -51,6 +54,9 @@ public class Controlador {
 
 	@Autowired
 	DesperfectoService desperfectoService;
+
+	@Autowired
+	ReclamoService reclamoService;
 
 	@PostMapping("/loginInspector")
 	public ResponseEntity<String> loginInspector(@RequestParam Integer legajo, @RequestParam String password) {
@@ -208,6 +214,23 @@ public class Controlador {
 			System.out.println("NO SOS PERSONAL MUNICIPAL");
 			return null;
 		}
+	}
 
+	@GetMapping("/buscarSitioId")
+	public Sitio buscarSitioId(@RequestParam Integer idSitio) {
+		return sitioService.buscarSitio(idSitio);
+	}
+
+	@PostMapping("/generarReclamoVecino")
+	public ResponseEntity<String> generarReclamoVecino(@RequestParam String mail, @RequestParam Integer idSitio,
+			@RequestParam Integer idDesperfecto, @RequestParam String descripcion,
+			@RequestParam("files") MultipartFile[] files) {
+
+		String resultado = reclamoService.generarReclamoVecino(mail, idSitio, idDesperfecto, descripcion, files);
+		if (resultado.equals("Reclamo generado con exito")) {
+			return ResponseEntity.ok(resultado);
+		} else {
+			return ResponseEntity.status(400).body(resultado);
+		}
 	}
 }
