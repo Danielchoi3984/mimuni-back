@@ -37,6 +37,10 @@ public class ReclamoService {
 	@Autowired
 	UploadFilesService guardarImagenes;
 
+	public List<Reclamo> todosLosReclamos() {
+		return reclamoRepository.findAll();
+	}
+
 	public String generarReclamoVecino(String mail, Integer idSitio, Integer idDesperfecto, String descripcion,
 			MultipartFile[] files) {
 //		Aca tenemsos el documento
@@ -51,11 +55,7 @@ public class ReclamoService {
 					String documento = vecino.getDocumento();
 					Reclamo nuevoReclamo = new Reclamo(documento, null, idSitio, idDesperfecto, descripcion, "Nuevo",
 							null);
-					// Falta guardar las imagenes
-					// Falta guardar las imagenes
-					// Falta guardar las imagenes
-					// Falta guardar las imagenes
-					// Falta guardar las imagenes
+
 					reclamoRepository.save(nuevoReclamo);
 
 					Reclamo r = ultimoReclamo();
@@ -83,4 +83,5 @@ public class ReclamoService {
 		}
 		return reclamo;
 	}
+
 }

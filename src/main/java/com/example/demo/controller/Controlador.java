@@ -1,5 +1,10 @@
 package com.example.demo.controller;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,12 +20,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.modelo.Barrio;
 import com.example.demo.modelo.Desperfecto;
+import com.example.demo.modelo.ImagenReclamo;
 import com.example.demo.modelo.Personal;
+import com.example.demo.modelo.Reclamo;
 import com.example.demo.modelo.ServicioComercio;
 import com.example.demo.modelo.ServicioProfesional;
 import com.example.demo.modelo.Sitio;
 import com.example.demo.modelo.Vecino;
 import com.example.demo.modelo.Vecinoregistrado;
+import com.example.demo.repository.ImagenReclamoRepository;
+import com.example.demo.repository.ReclamoRepository;
 import com.example.demo.service.BarrioService;
 import com.example.demo.service.DesperfectoService;
 import com.example.demo.service.PersonalService;
@@ -57,6 +66,9 @@ public class Controlador {
 
 	@Autowired
 	ReclamoService reclamoService;
+
+	@Autowired
+	ImagenReclamoRepository imagenReclamoRepository;
 
 	@PostMapping("/loginInspector")
 	public ResponseEntity<String> loginInspector(@RequestParam Integer legajo, @RequestParam String password) {
@@ -233,4 +245,27 @@ public class Controlador {
 			return ResponseEntity.status(400).body(resultado);
 		}
 	}
+
+//	@GetMapping("/imagenesReclamo")
+//	public List<ImagenReclamo> imagenesReclamo(@RequestParam Integer idReclamo) {
+//		return imagenReclamoRepository.findByIdReclamo(idReclamo);
+//	}
+
+	@GetMapping("/todosReclamos")
+	public List<Reclamo> todosReclamos() {
+		return reclamoService.todosLosReclamos();
+	}
+
+	@GetMapping("/imagenesReclamo")
+	public ResponseEntity<List<String>> obtenerImagenesReclamo(@RequestParam Integer idReclamo) {
+		List<ImagenReclamo> imagenesReclamo = imagenReclamoRepository.findByIdReclamo(idReclamo);
+		List<String> urls = new ArrayList<>();
+
+		for (ImagenReclamo imagen : imagenesReclamo) {
+			String url = "http://192.168.1.12:8080/imagenes/" + Paths.get(imagen.getPath()).getFileName().toString();
+			urls.add(url);
+		}
+		return ResponseEntity.ok(urls);
+	}
+
 }
