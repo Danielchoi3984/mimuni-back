@@ -11,10 +11,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.UploadFilesService;
 import com.example.demo.modelo.Desperfecto;
+import com.example.demo.modelo.MovimientoReclamo;
 import com.example.demo.modelo.Reclamo;
 import com.example.demo.modelo.Sitio;
 import com.example.demo.modelo.Vecino;
 import com.example.demo.repository.ImagenReclamoRepository;
+import com.example.demo.repository.MovimientoReclamoRepository;
 import com.example.demo.repository.ReclamoRepository;
 
 @Service
@@ -37,6 +39,9 @@ public class ReclamoService {
 
 	@Autowired
 	UploadFilesService guardarImagenes;
+
+	@Autowired
+	MovimientoReclamoRepository movimientoReclamoRepository;
 
 	public List<Reclamo> todosLosReclamos() {
 		return reclamoRepository.findAll();
@@ -95,6 +100,10 @@ public class ReclamoService {
 			}
 		}
 		return misReclamos;
+	}
+
+	public List<MovimientoReclamo> movimientosReclamo(Integer idReclamo) {
+		return movimientoReclamoRepository.findByIdReclamo(idReclamo);
 	}
 
 }

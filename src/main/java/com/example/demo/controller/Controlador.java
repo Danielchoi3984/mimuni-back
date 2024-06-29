@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.modelo.Barrio;
 import com.example.demo.modelo.Desperfecto;
 import com.example.demo.modelo.ImagenReclamo;
+import com.example.demo.modelo.MovimientoReclamo;
 import com.example.demo.modelo.Personal;
 import com.example.demo.modelo.Reclamo;
 import com.example.demo.modelo.ServicioComercio;
@@ -271,5 +272,10 @@ public class Controlador {
 	@GetMapping("/misReclamosVecino")
 	public List<Reclamo> misReclamosVecino(@RequestParam String mail) {
 		return reclamoService.misReclamosVecino(mail);
+	}
+
+	@GetMapping("/movimientosReclamo")
+	public List<MovimientoReclamo> movimientosReclamo(@RequestParam Integer idReclamo) {
+		return reclamoService.movimientosReclamo(idReclamo);
 	}
 }
