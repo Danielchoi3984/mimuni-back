@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.UploadFilesService;
 import com.example.demo.modelo.Desperfecto;
 import com.example.demo.modelo.Reclamo;
 import com.example.demo.modelo.Sitio;
@@ -32,6 +34,9 @@ public class ReclamoService {
 	@Autowired
 	DesperfectoService desperfectoService;
 
+	@Autowired
+	UploadFilesService guardarImagenes;
+
 	public String generarReclamoVecino(String mail, Integer idSitio, Integer idDesperfecto, String descripcion,
 			MultipartFile[] files) {
 //		Aca tenemsos el documento
@@ -52,7 +57,10 @@ public class ReclamoService {
 					// Falta guardar las imagenes
 					// Falta guardar las imagenes
 					reclamoRepository.save(nuevoReclamo);
-					
+
+					Reclamo r = ultimoReclamo();
+					guardarImagenes.handleFileUpload(r.getIdReclamo(), files);
+
 					return "Reclamo generado con exito";
 
 				} else {
@@ -67,4 +75,12 @@ public class ReclamoService {
 		}
 	}
 
+	public Reclamo ultimoReclamo() {
+		List<Reclamo> reclamos = reclamoRepository.findAll();
+		Reclamo reclamo = null;
+		for (Reclamo r : reclamos) {
+			reclamo = r;
+		}
+		return reclamo;
+	}
 }
