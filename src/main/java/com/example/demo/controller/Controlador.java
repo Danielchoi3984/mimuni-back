@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -325,5 +326,29 @@ public class Controlador {
 		}
 		return misServicio;
 	}
+
+	@DeleteMapping("/eliminarServicioComercio")
+	public ResponseEntity<String> eliminarServicioComercio(@RequestParam String mail,
+			@RequestParam Integer idServicio) {
+		String resultado = comercioservice.eliminarServicioComercio(mail, idServicio);
+		if (resultado.equals("Servicio Comercio eliminado")) {
+			return ResponseEntity.ok(resultado);
+		} else {
+			return ResponseEntity.status(400).body(resultado);
+		}
+	}
+
+	@DeleteMapping("/eliminarServicioProfesional")
+	public ResponseEntity<String> eliminarServicioProfesional(@RequestParam String mail,
+			@RequestParam Integer idServicio) {
+		String resultado = profesionalservice.eliminarServicioProfesional(mail, idServicio);
+		if (resultado.equals("Servicio Profesional eliminado")) {
+			return ResponseEntity.ok(resultado);
+		} else {
+			return ResponseEntity.status(400).body(resultado);
+		}
+	}
+
+//	Hay que hacer para eliminar el serviicio profesional y el servicio comercio
 
 }

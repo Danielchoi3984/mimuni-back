@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,24 @@ public class ServicioComercioService {
 
 	public List<ServicioComercio> comercios() {
 		return repositorio.findAll();
+	}
+
+	public String eliminarServicioComercio(String mail, Integer idServicioComercio) {
+		Vecino vecino = vecinoService.perfilVecinoregistrado(mail);
+		if (vecino == null) {
+			return "No existe el vecino";
+		}
+		Optional<ServicioComercio> servicioComercioOptional = repositorio.findById(idServicioComercio);
+		if (servicioComercioOptional.isPresent()) {
+			ServicioComercio servicio = servicioComercioOptional.get();
+			if (servicio.getVecino().getDocumento().equals(vecino.getDocumento())) {
+				repositorio.deleteById(idServicioComercio);
+				return "Servicio Comercio eliminado";
+			} else {
+				return "No es tu Servicio y no lo podes eliminar";
+			}
+		} else {
+			return "No es ID Servicio Profesional";
+		}
 	}
 }
