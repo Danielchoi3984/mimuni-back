@@ -89,12 +89,12 @@ public class MimuniBackApplication implements CommandLineRunner {
 //				"Observado y derivado a legales", ahora);
 //		movimientoReclamoRepository.save(movimientoReclamo);
 
-		System.out.println("MOVIMIENTOS DE LOS RECLAMOS");
+//		System.out.println("MOVIMIENTOS DE LOS RECLAMOS");
 //		List<MovimientoReclamo> movimientos = movimientoReclamoRepository.findAll();
 //		for (MovimientoReclamo movimiento : movimientos) {
 //			System.out.println(movimiento);
 //		}
-		System.out.println(movimientoReclamoRepository.findByIdReclamo(19));
+//		System.out.println(movimientoReclamoRepository.findByIdReclamo(19));
 	}
 
 	public void mostrarSitios(List<Sitio> sitios) {

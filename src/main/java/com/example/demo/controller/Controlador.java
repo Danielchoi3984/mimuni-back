@@ -278,4 +278,20 @@ public class Controlador {
 	public List<MovimientoReclamo> movimientosReclamo(@RequestParam Integer idReclamo) {
 		return reclamoService.movimientosReclamo(idReclamo);
 	}
+
+	@PostMapping("/crearServicioProfesional")
+	public String generarServicioProfesional(@RequestParam String mail, @RequestParam String medioContacto,
+			@RequestParam String horario, @RequestParam String rubro, @RequestParam String descripcion,
+			@RequestParam("files") MultipartFile[] files) {
+
+		return profesionalservice.crearServicioProfesional(mail, medioContacto, horario, rubro, descripcion, files);
+	}
+
+	@PostMapping("/crearServicioComercio")
+	public String generarServicioComercio(@RequestParam String mail, @RequestParam String direccion,
+			@RequestParam String contacto, @RequestParam String descripcion,
+			@RequestParam("files") MultipartFile[] files) {
+		return comercioservice.crearServicioComercio(mail, direccion, contacto, descripcion, files);
+	}
+
 }
