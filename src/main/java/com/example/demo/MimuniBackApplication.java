@@ -8,10 +8,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.example.demo.modelo.Denuncia;
 import com.example.demo.modelo.Desperfecto;
 import com.example.demo.modelo.MovimientoReclamo;
 import com.example.demo.modelo.Rubro;
 import com.example.demo.modelo.Sitio;
+import com.example.demo.repository.DenunciaRepository;
 import com.example.demo.repository.DesperfectoRepository;
 import com.example.demo.repository.MovimientoReclamoRepository;
 import com.example.demo.repository.RubroRepository;
@@ -56,6 +58,8 @@ public class MimuniBackApplication implements CommandLineRunner {
 	@Autowired
 	MovimientoReclamoRepository movimientoReclamoRepository;
 
+	@Autowired
+	DenunciaRepository denunciaRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MimuniBackApplication.class, args);
@@ -95,6 +99,11 @@ public class MimuniBackApplication implements CommandLineRunner {
 //			System.out.println(movimiento);
 //		}
 //		System.out.println(movimientoReclamoRepository.findByIdReclamo(19));
+
+		List<Denuncia> denunciasRealizadas = denunciaRepository.findAll();
+		for (Denuncia denuncia : denunciasRealizadas) {
+			System.out.println(denuncia);
+		}
 	}
 
 	public void mostrarSitios(List<Sitio> sitios) {

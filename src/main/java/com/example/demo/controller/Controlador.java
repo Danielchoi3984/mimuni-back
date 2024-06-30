@@ -34,6 +34,7 @@ import com.example.demo.repository.ImagenReclamoRepository;
 import com.example.demo.repository.ReclamoRepository;
 import com.example.demo.repository.VecinoregistradoRepository;
 import com.example.demo.service.BarrioService;
+import com.example.demo.service.DenunciaService;
 import com.example.demo.service.DesperfectoService;
 import com.example.demo.service.PersonalService;
 import com.example.demo.service.ReclamoService;
@@ -75,6 +76,9 @@ public class Controlador {
 
 	@Autowired
 	VecinoregistradoRepository vecinoregistradoRepository;
+
+	@Autowired
+	DenunciaService denunciaService;
 
 	@PostMapping("/loginInspector")
 	public ResponseEntity<String> loginInspector(@RequestParam Integer legajo, @RequestParam String password) {
@@ -343,6 +347,18 @@ public class Controlador {
 			@RequestParam Integer idServicio) {
 		String resultado = profesionalservice.eliminarServicioProfesional(mail, idServicio);
 		if (resultado.equals("Servicio Profesional eliminado")) {
+			return ResponseEntity.ok(resultado);
+		} else {
+			return ResponseEntity.status(400).body(resultado);
+		}
+	}
+
+	@PostMapping("/crearDenuncia")
+	public ResponseEntity<String> crearDenuncia(@RequestParam String mail, @RequestParam String dniDenunciado,
+			@RequestParam Integer idSitio, @RequestParam String descripcion,
+			@RequestParam("files") MultipartFile[] files) {
+		String resultado = denunciaService.realizarDenuncia(mail, dniDenunciado, idSitio, descripcion, files);
+		if (resultado.contains("Tu numero de denuncia es")) {
 			return ResponseEntity.ok(resultado);
 		} else {
 			return ResponseEntity.status(400).body(resultado);
