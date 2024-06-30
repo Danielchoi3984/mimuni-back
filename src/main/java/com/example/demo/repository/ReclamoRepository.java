@@ -11,4 +11,5 @@ public interface ReclamoRepository extends JpaRepository<Reclamo, Integer> {
 
 	List<Reclamo> findByLegajo(Integer legajo);
 
+
 }

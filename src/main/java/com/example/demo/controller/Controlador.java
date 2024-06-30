@@ -287,7 +287,7 @@ public class Controlador {
 	@PostMapping("/crearServicioProfesional")
 	public String generarServicioProfesional(@RequestParam String mail, @RequestParam String medioContacto,
 			@RequestParam String horario, @RequestParam String rubro, @RequestParam String descripcion,
-			@RequestParam("files") MultipartFile[] files) {
+			@RequestParam(required = false) MultipartFile[] files) {
 
 		return profesionalservice.crearServicioProfesional(mail, medioContacto, horario, rubro, descripcion, files);
 	}
@@ -295,7 +295,7 @@ public class Controlador {
 	@PostMapping("/crearServicioComercio")
 	public String generarServicioComercio(@RequestParam String mail, @RequestParam String direccion,
 			@RequestParam String contacto, @RequestParam String descripcion,
-			@RequestParam("files") MultipartFile[] files) {
+			@RequestParam(required = false) MultipartFile[] files) {
 		return comercioservice.crearServicioComercio(mail, direccion, contacto, descripcion, files);
 	}
 
@@ -352,7 +352,7 @@ public class Controlador {
 	@PostMapping("/crearDenuncia")
 	public ResponseEntity<String> crearDenuncia(@RequestParam String mail, @RequestParam String dniDenunciado,
 			@RequestParam Integer idSitio, @RequestParam String descripcion,
-			@RequestParam("files") MultipartFile[] files) {
+			@RequestParam(required = false) MultipartFile[] files) {
 		String resultado = denunciaService.realizarDenuncia(mail, dniDenunciado, idSitio, descripcion, files);
 		if (resultado.contains("Tu numero de denuncia es")) {
 			return ResponseEntity.ok(resultado);
@@ -374,7 +374,7 @@ public class Controlador {
 	@PostMapping("/generarReclamoInspector")
 	public ResponseEntity<String> generarReclamoInspector(@RequestParam Integer legajo, @RequestParam Integer idSitio,
 			@RequestParam Integer idDesperfecto, @RequestParam String descripcion,
-			@RequestParam("files") MultipartFile[] files) {
+			@RequestParam(required = false) MultipartFile[] files) {
 		String resultado = reclamoService.generarReclamoInspector(legajo, idSitio, idDesperfecto, descripcion, files);
 		if (resultado.contains("Tu numero de reclamo es")) {
 			return ResponseEntity.ok(resultado);
@@ -396,6 +396,11 @@ public class Controlador {
 	@GetMapping("/reclamoPorId")
 	public Reclamo buscarReclamoPorId(@RequestParam Integer idReclamo) {
 		return reclamoService.reclamoPorId(idReclamo);
+	}
+
+	@GetMapping("/reclamoPorIdUnificado")
+	public List<Reclamo> buscarReclamoPorIdUnificado(@RequestParam Integer idReclamo) {
+		return reclamoService.reclamosPorIdUnificado(idReclamo);
 	}
 
 }

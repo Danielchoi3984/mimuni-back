@@ -119,7 +119,6 @@ public class DenunciaService {
 			String documentoRealizoDenuncia = vecino.getDocumento();
 			return denunciasRealizasRepository.findByDocumento(documentoRealizoDenuncia);
 		}
-
 	}
 
 }

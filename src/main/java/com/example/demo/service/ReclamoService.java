@@ -104,9 +104,12 @@ public class ReclamoService {
 		List<Reclamo> reclamos = reclamoRepository.findAll();
 		List<Reclamo> misReclamos = new ArrayList<>();
 		for (Reclamo reclamo : reclamos) {
-			if (reclamo.getDocumento().equals(vecino.getDocumento())) {
-				misReclamos.add(reclamo);
+			if (reclamo.getDocumento() != null) {
+				if (reclamo.getDocumento().equals(vecino.getDocumento())) {
+					misReclamos.add(reclamo);
+				}
 			}
+
 		}
 		return misReclamos;
 	}
@@ -201,5 +204,23 @@ public class ReclamoService {
 			return reclamoOptional.get();
 		}
 		return null;
+	}
+
+	public List<Reclamo> reclamosPorIdUnificado(Integer idUnificado) {
+//		return reclamoRepository.findByIdReclamoUnificado(idUnificado);
+		List<Reclamo> reclamos = reclamoRepository.findAll();
+		List<Reclamo> reclamoMismoIdUnificado = new ArrayList<>();
+		for (Reclamo reclamo : reclamos) {
+			if (reclamo.getIdReclamoUnificado() != null) {
+				if (reclamo.getIdReclamo() == idUnificado) {
+					reclamoMismoIdUnificado.add(reclamo);
+				}
+				if (reclamo.getIdReclamoUnificado() == idUnificado) {
+					reclamoMismoIdUnificado.add(reclamo);
+				}
+			}
+		}
+		return reclamoMismoIdUnificado;
+
 	}
 }
