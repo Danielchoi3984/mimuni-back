@@ -45,5 +45,8 @@ public class ServicioProfesionalService {
 		return "Servicio creado";
 	}
 
+	public List<ServicioProfesional> serviciosProfesionales() {
+		return repositorioProfesional.findAll();
+	}
 
 }

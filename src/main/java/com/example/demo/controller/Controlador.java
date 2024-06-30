@@ -31,6 +31,7 @@ import com.example.demo.modelo.Vecino;
 import com.example.demo.modelo.Vecinoregistrado;
 import com.example.demo.repository.ImagenReclamoRepository;
 import com.example.demo.repository.ReclamoRepository;
+import com.example.demo.repository.VecinoregistradoRepository;
 import com.example.demo.service.BarrioService;
 import com.example.demo.service.DesperfectoService;
 import com.example.demo.service.PersonalService;
@@ -70,6 +71,9 @@ public class Controlador {
 
 	@Autowired
 	ImagenReclamoRepository imagenReclamoRepository;
+
+	@Autowired
+	VecinoregistradoRepository vecinoregistradoRepository;
 
 	@PostMapping("/loginInspector")
 	public ResponseEntity<String> loginInspector(@RequestParam Integer legajo, @RequestParam String password) {
@@ -292,6 +296,34 @@ public class Controlador {
 			@RequestParam String contacto, @RequestParam String descripcion,
 			@RequestParam("files") MultipartFile[] files) {
 		return comercioservice.crearServicioComercio(mail, direccion, contacto, descripcion, files);
+	}
+
+	@GetMapping("/misServiciosProfesionales")
+	public List<ServicioProfesional> misServicioProfesionales(@RequestParam String mail) {
+		Vecino vecino = vecinoservice.perfilVecinoregistrado(mail);
+		Vecinoregistrado vecinoregistrado = vecinoregistradoRepository.findById(vecino.getDocumento()).get();
+		List<ServicioProfesional> servicios = profesionalservice.serviciosProfesionales();
+		List<ServicioProfesional> misServicio = new ArrayList<>();
+		for (ServicioProfesional servicio : servicios) {
+			if (servicio.getVecino().getDocumento().equals(vecinoregistrado.getDocumento())) {
+				misServicio.add(servicio);
+			}
+		}
+		return misServicio;
+	}
+
+	@GetMapping("/misServiciosComercio")
+	public List<ServicioComercio> misServicioComercio(@RequestParam String mail) {
+		Vecino vecino = vecinoservice.perfilVecinoregistrado(mail);
+		Vecinoregistrado vecinoregistrado = vecinoregistradoRepository.findById(vecino.getDocumento()).get();
+		List<ServicioComercio> servicios = comercioservice.comercios();
+		List<ServicioComercio> misServicio = new ArrayList<>();
+		for (ServicioComercio servicio : servicios) {
+			if (servicio.getVecino().getDocumento().equals(vecinoregistrado.getDocumento())) {
+				misServicio.add(servicio);
+			}
+		}
+		return misServicio;
 	}
 
 }

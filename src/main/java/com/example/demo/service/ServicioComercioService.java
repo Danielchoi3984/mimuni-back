@@ -37,4 +37,8 @@ public class ServicioComercioService {
 		repositorio.save(servicio);
 		return "Servicio creado";
 	}
+
+	public List<ServicioComercio> comercios() {
+		return repositorio.findAll();
+	}
 }
