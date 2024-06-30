@@ -371,6 +371,11 @@ public class Controlador {
 		return denunciaService.denunciasRealizadas(mail);
 	}
 
+	@GetMapping("/denunciasRecibidas")
+	public List<Denuncia> denunciasRecibidas(@RequestParam String mail) {
+		return denunciaService.denunciasRecibidas(mail);
+	}
+
 //	Hay que hacer para eliminar el serviicio profesional y el servicio comercio
 
 }

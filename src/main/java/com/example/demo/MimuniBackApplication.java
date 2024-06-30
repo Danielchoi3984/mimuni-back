@@ -13,6 +13,7 @@ import com.example.demo.modelo.Desperfecto;
 import com.example.demo.modelo.MovimientoReclamo;
 import com.example.demo.modelo.Rubro;
 import com.example.demo.modelo.Sitio;
+
 import com.example.demo.repository.DenunciaRepository;
 import com.example.demo.repository.DesperfectoRepository;
 import com.example.demo.repository.MovimientoReclamoRepository;
@@ -112,6 +113,12 @@ public class MimuniBackApplication implements CommandLineRunner {
 //		for (Denuncia denuncia : denunciasRealizadas) {
 //			System.out.println(denuncia);
 //		}
+
+		System.out.println(" ----------  DENUNCIAS RECIBIDAS  -----------");
+		List<Denuncia> denuncias = denunciaService.denunciasRecibidas("nadal@gmail.com");
+		for (Denuncia denuncia : denuncias) {
+			System.out.println(denuncia);
+		}
 	}
 
 	public void mostrarSitios(List<Sitio> sitios) {
