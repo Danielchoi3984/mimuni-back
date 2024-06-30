@@ -18,6 +18,7 @@ import com.example.demo.repository.DesperfectoRepository;
 import com.example.demo.repository.MovimientoReclamoRepository;
 import com.example.demo.repository.RubroRepository;
 import com.example.demo.service.BarrioService;
+import com.example.demo.service.DenunciaService;
 import com.example.demo.service.DesperfectoService;
 import com.example.demo.service.PersonalService;
 import com.example.demo.service.ServicioComercioService;
@@ -59,7 +60,7 @@ public class MimuniBackApplication implements CommandLineRunner {
 	MovimientoReclamoRepository movimientoReclamoRepository;
 
 	@Autowired
-	DenunciaRepository denunciaRepository;
+	DenunciaService denunciaService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MimuniBackApplication.class, args);
@@ -100,10 +101,17 @@ public class MimuniBackApplication implements CommandLineRunner {
 //		}
 //		System.out.println(movimientoReclamoRepository.findByIdReclamo(19));
 
-		List<Denuncia> denunciasRealizadas = denunciaRepository.findAll();
-		for (Denuncia denuncia : denunciasRealizadas) {
-			System.out.println(denuncia);
-		}
+//		System.out.println(" MIS DENUNCIAS ");
+//		List<Denuncia> misDenuncias = denunciaService.denunciasRealizadas("nicosack@gmail.com");
+//		for (Denuncia denuncia : misDenuncias) {
+//			System.out.println(denuncia);
+//		}
+//
+//		System.out.println(" TODAS LAS DENUNCIAS ");
+//		List<Denuncia> denunciasRealizadas = denunciaService.denuncias();
+//		for (Denuncia denuncia : denunciasRealizadas) {
+//			System.out.println(denuncia);
+//		}
 	}
 
 	public void mostrarSitios(List<Sitio> sitios) {

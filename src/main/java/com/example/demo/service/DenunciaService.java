@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.modelo.Denuncia;
+import com.example.demo.modelo.DenunciaRecibida;
 import com.example.demo.modelo.Sitio;
 import com.example.demo.modelo.Vecino;
+import com.example.demo.repository.DenunciaRecibidaRepository;
 import com.example.demo.repository.DenunciaRepository;
 import com.example.demo.repository.VecinoRepository;
 
@@ -28,14 +30,22 @@ public class DenunciaService {
 	@Autowired
 	SitioService sitioService;
 
+	@Autowired
+	DenunciaRecibidaRepository denunciasRecibidaRepository;
+
 	// DEVUELVE TODAS LAS DENUNCIAS
 	public List<Denuncia> denuncias() {
 		return denunciasRealizasRepository.findAll();
 	}
 
 	// DEVUELVE LAS DENUNCIAS QUE HIZO UNA PERSONA
-	public List<Denuncia> denunciasRealizas(String mail) {
+	public List<Denuncia> denunciasRealizadas(String mail) {
 		Vecino vecino = vecinoService.perfilVecinoregistrado(mail);
+		if (vecino == null) {
+			return null;
+		} else {
+
+		}
 		String documentoRealizoDenuncia = vecino.getDocumento();
 		return denunciasRealizasRepository.findByDocumento(documentoRealizoDenuncia);
 	}
@@ -55,6 +65,10 @@ public class DenunciaService {
 
 				denunciasRealizasRepository.save(denuncia);
 				Integer idDenuncia = ultimaDenuncia().getIdDenuncias();
+
+				Vecino personaDenunciada = vecinoQueEsDenunciado.get();
+				DenunciaRecibida denunciaRecibida = new DenunciaRecibida(personaDenunciada, denuncia);
+				denunciasRecibidaRepository.save(denunciaRecibida);
 				return "Tu numero de denuncia es " + idDenuncia;
 				// Aca hay que hacer algo con las fotos tambien
 
@@ -69,14 +83,12 @@ public class DenunciaService {
 	}
 
 	public Denuncia ultimaDenuncia() {
-
 		List<Denuncia> denuncias = denunciasRealizasRepository.findAll();
 		Denuncia ultimaDenuncia = null;
 		for (Denuncia denuncia : denuncias) {
 			ultimaDenuncia = denuncia;
 		}
 		return ultimaDenuncia;
-
 	}
 
 }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.modelo.Barrio;
+import com.example.demo.modelo.Denuncia;
 import com.example.demo.modelo.Desperfecto;
 import com.example.demo.modelo.ImagenReclamo;
 import com.example.demo.modelo.MovimientoReclamo;
@@ -363,6 +364,11 @@ public class Controlador {
 		} else {
 			return ResponseEntity.status(400).body(resultado);
 		}
+	}
+
+	@GetMapping("/denunciasRealizadas")
+	public List<Denuncia> misDenuncias(@RequestParam String mail) {
+		return denunciaService.denunciasRealizadas(mail);
 	}
 
 //	Hay que hacer para eliminar el serviicio profesional y el servicio comercio
