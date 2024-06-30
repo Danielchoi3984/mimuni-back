@@ -381,7 +381,11 @@ public class Controlador {
 		} else {
 			return ResponseEntity.status(400).body(resultado);
 		}
+	}
 
+	@GetMapping("/reclamosPorSector")
+	public List<Reclamo> reclamosDelSector(@RequestParam Integer legajo) {
+		return reclamoService.reclamosDelSector(legajo);
 	}
 
 }

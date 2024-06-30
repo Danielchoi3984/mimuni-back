@@ -14,6 +14,7 @@ import com.example.demo.modelo.Desperfecto;
 import com.example.demo.modelo.MovimientoReclamo;
 import com.example.demo.modelo.Personal;
 import com.example.demo.modelo.Reclamo;
+import com.example.demo.modelo.Rubro;
 import com.example.demo.modelo.Sitio;
 import com.example.demo.modelo.Vecino;
 import com.example.demo.repository.ImagenReclamoRepository;
@@ -159,4 +160,29 @@ public class ReclamoService {
 
 	}
 
+	public List<Reclamo> reclamosDelSector(Integer legajo) {
+		List<Reclamo> reclamosDelSec = new ArrayList<>();
+		Optional<Personal> personalOptional = personalRepository.findById(legajo);
+		// Validamos que exista el personal
+		if (personalOptional.isPresent()) {
+			Personal inspector = personalOptional.get();
+			String sectorInspector = inspector.getSector();
+
+			List<Reclamo> reclamos = reclamoRepository.findAll();
+			for (Reclamo reclamo : reclamos) {
+				Integer idDesperfecto = reclamo.getIdDesperfecto();
+				Desperfecto desperfecto = desperfectoService.buscarDesperfectoId(idDesperfecto);
+				Rubro rubro = desperfecto.getRubro();
+				String rubroSector = rubro.getDescripcion();
+				System.out.println("SECTOR INSPECTOR: " + sectorInspector);
+				System.out.println("SECTOR RUBRO: " + rubroSector);
+				if (rubroSector.equals(sectorInspector)) {
+					reclamosDelSec.add(reclamo);
+				}
+			}
+			return reclamosDelSec;
+		} else {
+			return null;
+		}
+	}
 }
