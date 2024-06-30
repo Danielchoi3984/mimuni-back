@@ -125,7 +125,12 @@ public class ReclamoService {
 				if (sitio != null) {
 					// Validamos desperfecto
 					Desperfecto desperfecto = desperfectoService.buscarDesperfectoId(idDesperfecto);
+					System.out.println("Sector del inspector: " + inspector.getSector());
+					System.out.println(desperfecto.getRubro());
 					if (desperfecto != null) {
+						if (!inspector.getSector().equals(desperfecto.getRubro().getDescripcion())) {
+							return "No podes generar reclamos que no son de tu sector";
+						}
 						String estado = "Nuevo";
 
 						Reclamo nuevoReclamo = new Reclamo(null, legajo, idSitio, idDesperfecto, descripcion, estado,
