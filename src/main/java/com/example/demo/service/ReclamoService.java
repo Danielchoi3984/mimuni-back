@@ -185,4 +185,13 @@ public class ReclamoService {
 			return null;
 		}
 	}
+
+	public List<Reclamo> misReclamosInspector(Integer legajo) {
+		Optional<Personal> personalOptional = personalRepository.findById(legajo);
+		if (personalOptional.isPresent()) {
+			return reclamoRepository.findByLegajo(legajo);
+		} else {
+			return null;
+		}
+	}
 }

@@ -388,4 +388,9 @@ public class Controlador {
 		return reclamoService.reclamosDelSector(legajo);
 	}
 
+	@GetMapping("/misReclamosInspector")
+	public List<Reclamo> misReclamosInspec(@RequestParam Integer legajo) {
+		return reclamoService.misReclamosInspector(legajo);
+	}
+
 }
