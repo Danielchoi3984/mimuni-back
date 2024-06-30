@@ -393,4 +393,9 @@ public class Controlador {
 		return reclamoService.misReclamosInspector(legajo);
 	}
 
+	@GetMapping("/reclamoPorId")
+	public Reclamo buscarReclamoPorId(@RequestParam Integer idReclamo) {
+		return reclamoService.reclamoPorId(idReclamo);
+	}
+
 }

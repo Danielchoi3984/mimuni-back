@@ -194,4 +194,12 @@ public class ReclamoService {
 			return null;
 		}
 	}
+
+	public Reclamo reclamoPorId(Integer idReclamo) {
+		Optional<Reclamo> reclamoOptional = reclamoRepository.findById(idReclamo);
+		if (reclamoOptional.isPresent()) {
+			return reclamoOptional.get();
+		}
+		return null;
+	}
 }

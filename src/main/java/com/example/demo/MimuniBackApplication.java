@@ -85,7 +85,6 @@ public class MimuniBackApplication implements CommandLineRunner {
 //			System.out.println(desperfecto);
 //		}
 
-
 	}
 
 }
