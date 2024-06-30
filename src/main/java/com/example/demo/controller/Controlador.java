@@ -257,11 +257,6 @@ public class Controlador {
 		}
 	}
 
-//	@GetMapping("/imagenesReclamo")
-//	public List<ImagenReclamo> imagenesReclamo(@RequestParam Integer idReclamo) {
-//		return imagenReclamoRepository.findByIdReclamo(idReclamo);
-//	}
-
 	@GetMapping("/todosReclamos")
 	public List<Reclamo> todosReclamos() {
 		return reclamoService.todosLosReclamos();
@@ -376,6 +371,17 @@ public class Controlador {
 		return denunciaService.denunciasRecibidas(mail);
 	}
 
-//	Hay que hacer para eliminar el serviicio profesional y el servicio comercio
+	@PostMapping("/generarReclamoInspector")
+	public ResponseEntity<String> generarReclamoInspector(@RequestParam Integer legajo, @RequestParam Integer idSitio,
+			@RequestParam Integer idDesperfecto, @RequestParam String descripcion,
+			@RequestParam("files") MultipartFile[] files) {
+		String resultado = reclamoService.generarReclamoInspector(legajo, idSitio, idDesperfecto, descripcion, files);
+		if (resultado.contains("Tu numero de reclamo es")) {
+			return ResponseEntity.ok(resultado);
+		} else {
+			return ResponseEntity.status(400).body(resultado);
+		}
+
+	}
 
 }

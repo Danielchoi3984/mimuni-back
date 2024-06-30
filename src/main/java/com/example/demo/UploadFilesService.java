@@ -52,6 +52,9 @@ public class UploadFilesService {
 	}
 
 	private String getFileExtension(String fileName) {
+		if (fileName == null || fileName.lastIndexOf(".") == -1) {
+			return ""; // Manejar el caso donde no hay extensión o el nombre de archivo es nulo
+		}
 		return fileName.substring(fileName.lastIndexOf("."));
 	}
 }

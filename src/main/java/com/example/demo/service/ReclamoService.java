@@ -12,11 +12,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.UploadFilesService;
 import com.example.demo.modelo.Desperfecto;
 import com.example.demo.modelo.MovimientoReclamo;
+import com.example.demo.modelo.Personal;
 import com.example.demo.modelo.Reclamo;
 import com.example.demo.modelo.Sitio;
 import com.example.demo.modelo.Vecino;
 import com.example.demo.repository.ImagenReclamoRepository;
 import com.example.demo.repository.MovimientoReclamoRepository;
+import com.example.demo.repository.PersonalRepository;
 import com.example.demo.repository.ReclamoRepository;
 
 @Service
@@ -42,6 +44,12 @@ public class ReclamoService {
 
 	@Autowired
 	MovimientoReclamoRepository movimientoReclamoRepository;
+
+	@Autowired
+	PersonalService personalService;
+
+	@Autowired
+	PersonalRepository personalRepository;
 
 	public List<Reclamo> todosLosReclamos() {
 		return reclamoRepository.findAll();
@@ -104,6 +112,46 @@ public class ReclamoService {
 
 	public List<MovimientoReclamo> movimientosReclamo(Integer idReclamo) {
 		return movimientoReclamoRepository.findByIdReclamo(idReclamo);
+	}
+
+	public String generarReclamoInspector(Integer legajo, Integer idSitio, Integer idDesperfecto, String descripcion,
+			MultipartFile[] files) {
+		Optional<Personal> personalOptional = personalRepository.findById(legajo);
+		if (personalOptional.isPresent()) {
+			Personal inspector = personalOptional.get();
+			if (inspector.getCategoria() == 8) {
+				// Validamos sitio
+				Sitio sitio = sitioService.buscarSitio(idSitio);
+				if (sitio != null) {
+					// Validamos desperfecto
+					Desperfecto desperfecto = desperfectoService.buscarDesperfectoId(idDesperfecto);
+					if (desperfecto != null) {
+						String estado = "Nuevo";
+
+						Reclamo nuevoReclamo = new Reclamo(null, legajo, idSitio, idDesperfecto, descripcion, estado,
+								null);
+
+						reclamoRepository.save(nuevoReclamo);
+
+						Reclamo r = ultimoReclamo();
+						guardarImagenes.handleFileUpload(r.getIdReclamo(), files);
+						return "Tu numero de reclamo es " + r.getIdReclamo();
+
+					} else {
+						return "No existe ID desperfecto";
+					}
+				} else {
+					return "No existe ID sitio";
+				}
+
+			} else {
+				return "Sos empleado municipal pero no inspector";
+			}
+
+		} else {
+			return "NO SOS EMPLEADO MUNICIPAL";
+		}
+
 	}
 
 }

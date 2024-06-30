@@ -8,13 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.modelo.Desperfecto;
+import com.example.demo.modelo.Personal;
 import com.example.demo.repository.DesperfectoRepository;
+import com.example.demo.repository.PersonalRepository;
 
 @Service
 public class DesperfectoService {
 
 	@Autowired
 	DesperfectoRepository desperfectoRepository;
+
+	@Autowired
+	PersonalService personalService;
 
 	public List<Desperfecto> todosLosDesperfectos() {
 		return desperfectoRepository.findAll();
@@ -42,5 +47,20 @@ public class DesperfectoService {
 		} else {
 			return null;
 		}
+	}
+
+	public List<Desperfecto> desperfectosInspector(Integer legajo) {
+		List<Desperfecto> desperfectosInspector = new ArrayList<>();
+		Personal inspector = personalService.perfilInspector(legajo);
+		List<Desperfecto> desperfectos = todosLosDesperfectos();
+		for (Desperfecto desperfecto : desperfectos) {
+			String sectorInspector = inspector.getSector();
+			String sectorDesperfecto = desperfecto.getRubro().getDescripcion();
+			if (sectorInspector.equals(sectorDesperfecto)) {
+				desperfectosInspector.add(desperfecto);
+			}
+		}
+		return desperfectosInspector;
+
 	}
 }

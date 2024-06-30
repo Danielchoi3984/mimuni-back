@@ -80,52 +80,12 @@ public class MimuniBackApplication implements CommandLineRunner {
 //			System.out.println(rubro);
 //		}
 
-//		List<Desperfecto> desperfectos = desperfectoRepository.findAll();
+//		List<Desperfecto> desperfectos = desperfectoService.desperfectosInspector(1);
 //		for (Desperfecto desperfecto : desperfectos) {
 //			System.out.println(desperfecto);
 //		}
 
-//		List<Desperfecto> desperfectosPorSector = desperfectoService.desperfectoPorSector("Seguridad");
-//		for (Desperfecto desperfecto : desperfectosPorSector) {
-//			System.out.println(desperfecto);
-//		}
 
-//		LocalDateTime ahora = LocalDateTime.now();
-//		MovimientoReclamo movimientoReclamo = new MovimientoReclamo(19L, "Cristiano Ronaldo",
-//				"Observado y derivado a legales", ahora);
-//		movimientoReclamoRepository.save(movimientoReclamo);
-
-//		System.out.println("MOVIMIENTOS DE LOS RECLAMOS");
-//		List<MovimientoReclamo> movimientos = movimientoReclamoRepository.findAll();
-//		for (MovimientoReclamo movimiento : movimientos) {
-//			System.out.println(movimiento);
-//		}
-//		System.out.println(movimientoReclamoRepository.findByIdReclamo(19));
-
-//		System.out.println(" MIS DENUNCIAS ");
-//		List<Denuncia> misDenuncias = denunciaService.denunciasRealizadas("nicosack@gmail.com");
-//		for (Denuncia denuncia : misDenuncias) {
-//			System.out.println(denuncia);
-//		}
-//
-//		System.out.println(" TODAS LAS DENUNCIAS ");
-//		List<Denuncia> denunciasRealizadas = denunciaService.denuncias();
-//		for (Denuncia denuncia : denunciasRealizadas) {
-//			System.out.println(denuncia);
-//		}
-
-		System.out.println(" ----------  DENUNCIAS RECIBIDAS  -----------");
-		List<Denuncia> denuncias = denunciaService.denunciasRecibidas("nadal@gmail.com");
-		for (Denuncia denuncia : denuncias) {
-			System.out.println(denuncia);
-		}
-	}
-
-	public void mostrarSitios(List<Sitio> sitios) {
-		System.out.println("----------- SITIOS ---------");
-		for (Sitio sitio : sitios) {
-			System.out.println(sitio);
-		}
 	}
 
 }
