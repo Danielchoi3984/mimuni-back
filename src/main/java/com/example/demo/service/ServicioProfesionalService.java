@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.UploadFilesServiceDenuncias;
+import com.example.demo.UploadFilesServiceProfesional;
 import com.example.demo.modelo.ServicioComercio;
 import com.example.demo.modelo.ServicioProfesional;
 import com.example.demo.modelo.Vecino;
@@ -26,6 +28,9 @@ public class ServicioProfesionalService {
 	@Autowired
 	VecinoregistradoRepository vecinoregistradoRepository;
 
+	@Autowired
+	UploadFilesServiceProfesional guardarImagenes;
+
 	public List<ServicioProfesional> serviciosProfesionalesHabilitados() {
 		// Servicios todos tiene habilitados y bloqueados
 //		List<ServicioProfesional> serviciosTodos =  repositorioProfesional.findAll();
@@ -43,7 +48,11 @@ public class ServicioProfesionalService {
 		ServicioProfesional servicio = new ServicioProfesional(nombre, apellido, medioContacto, horario, rubro,
 				descripcion, vecinoRegistrado, estado);
 		repositorioProfesional.save(servicio);
-		System.out.println("SERVICIO PROFESIONAL CREADO");
+
+//		Aca hay que agregar las imgs
+		ServicioProfesional servicioUltimo = ultimo();
+		Integer idUltimo = servicioUltimo.getIdservicioprofesional();
+		guardarImagenes.handleFileUpload(idUltimo, files);
 		return "Servicio creado";
 	}
 
@@ -68,6 +77,15 @@ public class ServicioProfesionalService {
 		} else {
 			return "No es ID Servicio Comercio";
 		}
+	}
+
+	public ServicioProfesional ultimo() {
+		List<ServicioProfesional> serviciosProf = repositorioProfesional.findAll();
+		ServicioProfesional ultimo = null;
+		for (ServicioProfesional servicio : serviciosProf) {
+			ultimo = servicio;
+		}
+		return ultimo;
 	}
 
 }
