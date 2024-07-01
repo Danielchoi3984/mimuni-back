@@ -24,6 +24,8 @@ import com.example.demo.modelo.Denuncia;
 import com.example.demo.modelo.Desperfecto;
 import com.example.demo.modelo.ImagenDenuncia;
 import com.example.demo.modelo.ImagenReclamo;
+import com.example.demo.modelo.ImagenServicioComercio;
+import com.example.demo.modelo.ImagenServicioProfesional;
 import com.example.demo.modelo.MovimientoDenuncia;
 import com.example.demo.modelo.MovimientoReclamo;
 import com.example.demo.modelo.Personal;
@@ -35,6 +37,8 @@ import com.example.demo.modelo.Vecino;
 import com.example.demo.modelo.Vecinoregistrado;
 import com.example.demo.repository.ImagenDenunciaRepository;
 import com.example.demo.repository.ImagenReclamoRepository;
+import com.example.demo.repository.ImagenServicioComercioRepository;
+import com.example.demo.repository.ImagenServicioProfesionalRepository;
 import com.example.demo.repository.MovimientoDenunciaRepository;
 import com.example.demo.repository.ReclamoRepository;
 import com.example.demo.repository.VecinoregistradoRepository;
@@ -90,6 +94,12 @@ public class Controlador {
 
 	@Autowired
 	MovimientoDenunciaRepository movimientoDenunciaRepository;
+
+	@Autowired
+	ImagenServicioProfesionalRepository imagenServicioProfesionalRepository;
+
+	@Autowired
+	ImagenServicioComercioRepository imagenServicioComercioRepository;
 
 	@PostMapping("/loginInspector")
 	public ResponseEntity<String> loginInspector(@RequestParam Integer legajo, @RequestParam String password) {
@@ -289,7 +299,32 @@ public class Controlador {
 		List<ImagenDenuncia> imagenesDenuncia = imagenDenunciaRepository.findByIdDenuncia(idDenuncia);
 		List<String> urls = new ArrayList<>();
 		for (ImagenDenuncia imagen : imagenesDenuncia) {
-			String url = "http://localhost:8080/denuncias" + Paths.get(imagen.getPath()).getFileName().toString();
+			String url = "http://localhost:8080/imagenes/" + Paths.get(imagen.getPath()).getFileName().toString();
+			urls.add(url);
+		}
+		return ResponseEntity.ok(urls);
+	}
+
+	@GetMapping("/imagenesServicioProfesional")
+	public ResponseEntity<List<String>> obtenerImagenesServicioProfesional(
+			@RequestParam Integer idServicioProfesional) {
+		List<ImagenServicioProfesional> imagenesServicioProf = imagenServicioProfesionalRepository
+				.findByIdservicioprofesional(idServicioProfesional);
+		List<String> urls = new ArrayList<>();
+		for (ImagenServicioProfesional imagen : imagenesServicioProf) {
+			String url = "http://localhost:8080/imagenes/" + Paths.get(imagen.getPath()).getFileName().toString();
+			urls.add(url);
+		}
+		return ResponseEntity.ok(urls);
+	}
+
+	@GetMapping("/imagenesServicioComercio")
+	public ResponseEntity<List<String>> obtenerImagenesServicioComercio(@RequestParam Integer idServicioComercio) {
+		List<ImagenServicioComercio> imagenesServicioProf = imagenServicioComercioRepository
+				.findByIdserviciocomercio(idServicioComercio);
+		List<String> urls = new ArrayList<>();
+		for (ImagenServicioComercio imagen : imagenesServicioProf) {
+			String url = "http://localhost:8080/imagenes/" + Paths.get(imagen.getPath()).getFileName().toString();
 			urls.add(url);
 		}
 		return ResponseEntity.ok(urls);
