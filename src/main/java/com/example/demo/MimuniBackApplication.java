@@ -10,12 +10,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.example.demo.modelo.Denuncia;
 import com.example.demo.modelo.Desperfecto;
+import com.example.demo.modelo.MovimientoDenuncia;
 import com.example.demo.modelo.MovimientoReclamo;
 import com.example.demo.modelo.Rubro;
 import com.example.demo.modelo.Sitio;
 
 import com.example.demo.repository.DenunciaRepository;
 import com.example.demo.repository.DesperfectoRepository;
+import com.example.demo.repository.MovimientoDenunciaRepository;
 import com.example.demo.repository.MovimientoReclamoRepository;
 import com.example.demo.repository.RubroRepository;
 import com.example.demo.service.BarrioService;
@@ -63,6 +65,9 @@ public class MimuniBackApplication implements CommandLineRunner {
 	@Autowired
 	DenunciaService denunciaService;
 
+	@Autowired
+	MovimientoDenunciaRepository movimientoDenunciaRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(MimuniBackApplication.class, args);
 	}
@@ -85,6 +90,32 @@ public class MimuniBackApplication implements CommandLineRunner {
 //			System.out.println(desperfecto);
 //		}
 
+//		CARGAR MOVIMIENTO DE RECLAMO
+//		agregarMovimientoReclamo(12, "Nico Sack", "Ser muy pedoso");
+
+//		CARGAR MOVIMIENTO DE DENUNCIAS
+//		agregarMovimientoDenuncia(12, "Nico Sack", "Ser muy pedoso");
+//		agregarMovimientoDenuncia(12, "Nico Sack", "Ser muy pedoso");
+//		agregarMovimientoDenuncia(12, "Nico Sack", "Ser muy pedoso");
+
+//		System.out.println("------------ MOVIMIENTOS DE LAS DENUNCIAS -----------");
+//		List<MovimientoDenuncia> movimientosDenuncias = movimientoDenunciaRepository.findAll();
+//		for (MovimientoDenuncia movimiento : movimientosDenuncias) {
+//			System.out.println(movimiento);
+//		}
+
+	}
+
+	public void agregarMovimientoDenuncia(Integer idDenuncia, String responsable, String causa) {
+		LocalDateTime ahora = LocalDateTime.now();
+		MovimientoDenuncia movimientoNuevo = new MovimientoDenuncia(idDenuncia, responsable, causa, ahora);
+		movimientoDenunciaRepository.save(movimientoNuevo);
+	}
+
+	public void agregarMovimientoReclamo(Integer idReclamo, String responsable, String causa) {
+		LocalDateTime ahora = LocalDateTime.now();
+		MovimientoReclamo movimientoNuevo = new MovimientoReclamo(idReclamo, responsable, causa, ahora);
+		movimientoReclamoRepository.save(movimientoNuevo);
 	}
 
 }

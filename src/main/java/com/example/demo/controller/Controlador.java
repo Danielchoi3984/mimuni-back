@@ -23,6 +23,7 @@ import com.example.demo.modelo.Barrio;
 import com.example.demo.modelo.Denuncia;
 import com.example.demo.modelo.Desperfecto;
 import com.example.demo.modelo.ImagenReclamo;
+import com.example.demo.modelo.MovimientoDenuncia;
 import com.example.demo.modelo.MovimientoReclamo;
 import com.example.demo.modelo.Personal;
 import com.example.demo.modelo.Reclamo;
@@ -32,6 +33,7 @@ import com.example.demo.modelo.Sitio;
 import com.example.demo.modelo.Vecino;
 import com.example.demo.modelo.Vecinoregistrado;
 import com.example.demo.repository.ImagenReclamoRepository;
+import com.example.demo.repository.MovimientoDenunciaRepository;
 import com.example.demo.repository.ReclamoRepository;
 import com.example.demo.repository.VecinoregistradoRepository;
 import com.example.demo.service.BarrioService;
@@ -80,6 +82,9 @@ public class Controlador {
 
 	@Autowired
 	DenunciaService denunciaService;
+
+	@Autowired
+	MovimientoDenunciaRepository movimientoDenunciaRepository;
 
 	@PostMapping("/loginInspector")
 	public ResponseEntity<String> loginInspector(@RequestParam Integer legajo, @RequestParam String password) {
@@ -282,6 +287,11 @@ public class Controlador {
 	@GetMapping("/movimientosReclamo")
 	public List<MovimientoReclamo> movimientosReclamo(@RequestParam Integer idReclamo) {
 		return reclamoService.movimientosReclamo(idReclamo);
+	}
+
+	@GetMapping("/movimientosDenuncia")
+	public List<MovimientoDenuncia> movimientosDenun(@RequestParam Integer idDenuncia) {
+		return movimientoDenunciaRepository.findAll();
 	}
 
 	@PostMapping("/crearServicioProfesional")
