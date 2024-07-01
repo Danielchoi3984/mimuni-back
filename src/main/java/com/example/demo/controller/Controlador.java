@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.modelo.Barrio;
 import com.example.demo.modelo.Denuncia;
 import com.example.demo.modelo.Desperfecto;
+import com.example.demo.modelo.ImagenDenuncia;
 import com.example.demo.modelo.ImagenReclamo;
 import com.example.demo.modelo.MovimientoDenuncia;
 import com.example.demo.modelo.MovimientoReclamo;
@@ -32,6 +33,7 @@ import com.example.demo.modelo.ServicioProfesional;
 import com.example.demo.modelo.Sitio;
 import com.example.demo.modelo.Vecino;
 import com.example.demo.modelo.Vecinoregistrado;
+import com.example.demo.repository.ImagenDenunciaRepository;
 import com.example.demo.repository.ImagenReclamoRepository;
 import com.example.demo.repository.MovimientoDenunciaRepository;
 import com.example.demo.repository.ReclamoRepository;
@@ -76,6 +78,9 @@ public class Controlador {
 
 	@Autowired
 	ImagenReclamoRepository imagenReclamoRepository;
+
+	@Autowired
+	ImagenDenunciaRepository imagenDenunciaRepository;
 
 	@Autowired
 	VecinoregistradoRepository vecinoregistradoRepository;
@@ -274,6 +279,17 @@ public class Controlador {
 
 		for (ImagenReclamo imagen : imagenesReclamo) {
 			String url = "http://localhost:8080/imagenes/" + Paths.get(imagen.getPath()).getFileName().toString();
+			urls.add(url);
+		}
+		return ResponseEntity.ok(urls);
+	}
+
+	@GetMapping("/imagenesDenuncia")
+	public ResponseEntity<List<String>> obtenerImagenesDenuncia(@RequestParam Integer idDenuncia) {
+		List<ImagenDenuncia> imagenesDenuncia = imagenDenunciaRepository.findByIdDenuncia(idDenuncia);
+		List<String> urls = new ArrayList<>();
+		for (ImagenDenuncia imagen : imagenesDenuncia) {
+			String url = "http://localhost:8080/denuncias" + Paths.get(imagen.getPath()).getFileName().toString();
 			urls.add(url);
 		}
 		return ResponseEntity.ok(urls);

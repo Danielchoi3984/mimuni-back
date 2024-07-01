@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.UploadFilesServiceDenuncias;
 import com.example.demo.modelo.DatosDenuncia;
 import com.example.demo.modelo.Denuncia;
 import com.example.demo.modelo.Sitio;
@@ -32,6 +33,9 @@ public class DenunciaService {
 
 	@Autowired
 	SitioService sitioService;
+
+	@Autowired
+	UploadFilesServiceDenuncias guardarImagenes;
 
 	@Autowired
 	DatosDenunciaRepository datosDenunciaRepository;
@@ -88,6 +92,11 @@ public class DenunciaService {
 				DatosDenuncia datosDenuncia = new DatosDenuncia(documentoDenunciante, documentoDenunciado, idDenuncia);
 
 				datosDenunciaRepository.save(datosDenuncia);
+
+//				Hay que buscar la ultima denuncia
+				Denuncia ultima = ultimaDenuncia();
+				Integer numDenuncia = ultima.getIdDenuncias();
+				guardarImagenes.handleFileUpload(numDenuncia, files);
 
 				return "Tu numero de denuncia es " + idDenuncia;
 				// Aca hay que hacer algo con las fotos tambien
