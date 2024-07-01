@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.example.demo.modelo.Denuncia;
 import com.example.demo.modelo.Desperfecto;
+import com.example.demo.modelo.ImagenDenuncia;
 import com.example.demo.modelo.MovimientoDenuncia;
 import com.example.demo.modelo.MovimientoReclamo;
 import com.example.demo.modelo.Rubro;
@@ -17,6 +18,7 @@ import com.example.demo.modelo.Sitio;
 
 import com.example.demo.repository.DenunciaRepository;
 import com.example.demo.repository.DesperfectoRepository;
+import com.example.demo.repository.ImagenDenunciaRepository;
 import com.example.demo.repository.MovimientoDenunciaRepository;
 import com.example.demo.repository.MovimientoReclamoRepository;
 import com.example.demo.repository.RubroRepository;
@@ -68,6 +70,9 @@ public class MimuniBackApplication implements CommandLineRunner {
 	@Autowired
 	MovimientoDenunciaRepository movimientoDenunciaRepository;
 
+	@Autowired
+	ImagenDenunciaRepository imagenDenunciaRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(MimuniBackApplication.class, args);
 	}
@@ -102,6 +107,16 @@ public class MimuniBackApplication implements CommandLineRunner {
 //		List<MovimientoDenuncia> movimientosDenuncias = movimientoDenunciaRepository.findAll();
 //		for (MovimientoDenuncia movimiento : movimientosDenuncias) {
 //			System.out.println(movimiento);
+//		}
+
+		//Agregar Imagen a Denuncia
+//		ImagenDenuncia img = new ImagenDenuncia("sadadasdasd", 12);
+//		imagenDenunciaRepository.save(img);
+		
+//		System.out.println(" --------- Imagenes de las denuncias ---------");
+//		List<ImagenDenuncia> imagenesDenuncia = imagenDenunciaRepository.findAll();
+//		for (ImagenDenuncia imagenDenuncia : imagenesDenuncia) {
+//			System.out.println(imagenDenuncia);
 //		}
 
 	}
