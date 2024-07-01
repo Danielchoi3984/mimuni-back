@@ -267,7 +267,7 @@ public class Controlador {
 	@PostMapping("/generarReclamoVecino")
 	public ResponseEntity<String> generarReclamoVecino(@RequestParam String mail, @RequestParam Integer idSitio,
 			@RequestParam Integer idDesperfecto, @RequestParam String descripcion,
-			@RequestParam("files") MultipartFile[] files) {
+			@RequestParam(required = false) MultipartFile[] files) {
 
 		String resultado = reclamoService.generarReclamoVecino(mail, idSitio, idDesperfecto, descripcion, files);
 //		if (resultado.equals("Reclamo generado con exito")) {
