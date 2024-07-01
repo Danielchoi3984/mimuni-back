@@ -76,7 +76,8 @@ public class ReclamoService {
 					Reclamo r = ultimoReclamo();
 					guardarImagenes.handleFileUpload(r.getIdReclamo(), files);
 
-					return "Reclamo generado con exito";
+					return "Tu numero de reclamo es " + r.getIdReclamo();
+//					return "Reclamo generado con exito";
 
 				} else {
 					return "Desperfecto no encontrado";

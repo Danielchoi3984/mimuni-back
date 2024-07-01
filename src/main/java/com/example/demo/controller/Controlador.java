@@ -270,7 +270,8 @@ public class Controlador {
 			@RequestParam("files") MultipartFile[] files) {
 
 		String resultado = reclamoService.generarReclamoVecino(mail, idSitio, idDesperfecto, descripcion, files);
-		if (resultado.equals("Reclamo generado con exito")) {
+//		if (resultado.equals("Reclamo generado con exito")) {
+		if (resultado.contains("Tu numero de reclamo es")) {
 			return ResponseEntity.ok(resultado);
 		} else {
 			return ResponseEntity.status(400).body(resultado);
