@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.UploadFilesServiceComercio;
+import com.example.demo.UploadFilesServiceDenuncias;
 import com.example.demo.modelo.ServicioComercio;
 import com.example.demo.modelo.Vecino;
 import com.example.demo.modelo.Vecinoregistrado;
@@ -24,6 +26,9 @@ public class ServicioComercioService {
 	@Autowired
 	VecinoService vecinoService;
 
+	@Autowired
+	UploadFilesServiceComercio guardarImagenes;
+
 	public List<ServicioComercio> serviciosComerciosHabilitados() {
 		List<ServicioComercio> comerciosHabilitados = repositorio.findByEstado("H");
 		return comerciosHabilitados;
@@ -36,6 +41,12 @@ public class ServicioComercioService {
 		Vecinoregistrado vecinoregistrado = vecinoregistradoRepository.findById(vecino.getDocumento()).get();
 		ServicioComercio servicio = new ServicioComercio(direccion, contacto, descripcion, vecinoregistrado, estado);
 		repositorio.save(servicio);
+
+//		Aca agreamos la imagen
+		ServicioComercio ultimoServicioComercio = ultimoServicioComercio();
+		Integer idUltimo = ultimoServicioComercio.getIdServicioComercio();
+		guardarImagenes.handleFileUpload(idUltimo, files);
+
 		return "Servicio creado";
 	}
 
@@ -60,5 +71,15 @@ public class ServicioComercioService {
 		} else {
 			return "No es ID Servicio Profesional";
 		}
+	}
+
+	public ServicioComercio ultimoServicioComercio() {
+		List<ServicioComercio> comercios = repositorio.findAll();
+		ServicioComercio ultimo = null;
+		for (ServicioComercio servicio : comercios) {
+			ultimo = servicio;
+		}
+		return ultimo;
+
 	}
 }

@@ -26,7 +26,7 @@ public class UploadFilesServiceDenuncias {
 	@Transactional
 	public String handleFileUpload(Integer idDenuncia, MultipartFile[] files) {
 		try {
-			String uploadDir = "src/main/resources/static/denuncias";
+			String uploadDir = "src/main/resources/static/imagenes";
 			Path uploadPath = Paths.get(uploadDir);
 			if (!Files.exists(uploadPath)) {
 				Files.createDirectories(uploadPath);
