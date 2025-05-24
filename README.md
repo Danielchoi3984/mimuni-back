@@ -36,3 +36,15 @@ The goal is to enhance communication between residents and municipal administrat
 - **Eclipse IDE** – Development environment.
 
 ---
+> The frontend was developed separately and is not included in this repository.
+<h2>🛠️frontend</h2>
+
+- React Native
+
+- React Navigation
+
+- Axios
+
+- SweetAlert2
+
+- Google Maps API
