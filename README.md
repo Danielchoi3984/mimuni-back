@@ -1,4 +1,4 @@
-# 🏛️ MiMuni Backend – Complaint and Report Management System
+# 🏛️ MiMuni Backend - Claims and Complaints System
 
 **MiMuni Backend** is the backend component of the MiMuni system, designed to manage citizen complaints and reports directed to municipal authorities. It provides a RESTful API for handling user authentication, complaint submissions, status tracking, and more.
 
